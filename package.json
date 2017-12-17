@@ -1,0 +1,25 @@
+{
+  "name": "neeo-http",
+  "version": "0.0.1",
+  "description": "A http plugin for neeo remote.",
+  "license": "GPL-3.0",
+  "keywords": [
+    "neeo",
+    "http"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:benzman81/neeo-http.git"
+  },
+  "bugs": {
+    "url": "https://github.com/benzman81/neeo-http/issues"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "dependencies": {
+    "neeo-sdk": "*",
+  },
+  "homepage": "https://github.com/benzman81/neeo-http#readme",
+  "author": "benzman81"
+}
