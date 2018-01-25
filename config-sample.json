@@ -1,0 +1,14 @@
+{
+  "buttons": [
+    {
+      "id": "mybutton1",
+      "label": "Button 1",
+      "url": "http://someurltocall"
+    },
+    {
+      "id": "mybutton2",
+      "label": "Button 2",
+      "url": "http://someurltocall"
+    }
+  ]
+}

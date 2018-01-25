@@ -18,7 +18,8 @@
     "node": ">=6.0.0"
   },
   "dependencies": {
-    "neeo-sdk": "*",
+    "neeo-sdk": "^0.48.13",
+    "request": "^2.49.0"
   },
   "homepage": "https://github.com/benzman81/neeo-http#readme",
   "author": "benzman81"
