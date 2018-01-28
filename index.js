@@ -4,19 +4,36 @@ const fs = require("fs");
 const request = require("request");
 const neeoapi = require('neeo-sdk');
 
+var DEFAULT_REQUEST_TIMEOUT = 10000;
+
 console.log('NEEO "http" buttons accessory');
 console.log('------------------------------------------');
 
 var configFileContent = fs.readFileSync("config.json");
 var config = JSON.parse(configFileContent);
 
+var brainIp = config.brainip;
 var buttons = config.buttons || [];
 
 var onButtonPressed = function onButtonPressed(name, deviceId) {
   console.log('[CONTROLLER] button pressed', name , deviceId);
   for(var i = 0; i < buttons.length; i++){
-      if(buttons[i].id === name) {
-        console.log('[CONTROLLER] calling url', buttons[i].url);
+      var button = buttons[i];
+      if(button.id === name) {
+        console.log('[CONTROLLER] button with calling url', button.id, button.url);
+        request.get({
+          url: button.url,
+          timeout: DEFAULT_REQUEST_TIMEOUT
+        }, function(err, response, body) {
+            var statusCode = response && response.statusCode ? response.statusCode: -1;
+            //console.log("Request to '%s' finished with status code '%s' and body '%s'.", button.url, statusCode, body, err);
+            if (!err && statusCode == 200) {
+              console.log("Request was OK");
+            }
+            else {
+              console.log(err || new Error("Request to '"+urlToCall+"' was not succesful."));
+            }
+        });
       }
   }
 };
@@ -41,7 +58,7 @@ function startAccessory(brain) {
     devices: [customHttpDevice]
   })
   .then(() => {
-    console.log('# READY! use the NEEO app to search for "NEEO Accessory".');
+    console.log('# READY! use the NEEO app to search for "http".');
   })
   .catch((error) => {
     console.error('ERROR!', error.message);
@@ -49,9 +66,8 @@ function startAccessory(brain) {
   });
 }
 
-const brainIp = null;
 if (brainIp) {
-  console.log('- use NEEO Brain IP from env variable', brainIp);
+  console.log('- use NEEO Brain IP from conf', brainIp);
   startAccessory(brainIp);
 } else {
   console.log('- discover one NEEO Brain...');
